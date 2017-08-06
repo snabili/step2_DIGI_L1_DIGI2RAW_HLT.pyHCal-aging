@@ -1,11 +1,3 @@
-# Auto generated configuration file                                                                                                            
-# using:                                                                                                                                       
-# Revision: 1.19                                                                                                                               
-# Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v                                                         
-# with command line options: step2 --conditions 91X_upgrade2023_realistic_v3 -s DIGI:pdigi_valid,L1,DIGI2RAW,HLT:@fake2 --datatier GEN-SIM-DIG\
-I-RAW -n -1 --geometry Extended2023D17 --era Phase2C2_timing --eventcontent FEVTDEBUGHLT --customise SLHCUpgradeSimulations/Configuration/agin\
-g.customise_aging_4500_ultimate --no_exec --filein file:step1.root --fileout file:step2.root    
-
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -108,8 +100,9 @@ associatePatAlgosToolsTask(process)
 #call to customisation function customise_aging_4500_ultimate imported from SLHCUpgradeSimulations.Configuration.aging                         
 #process = customise_aging_4500_ultimate(process)                                                                                              
 
-from SLHCUpgradeSimulations.Configuration.aging import ageHcal
-process = ageHcal(process,9000,7.0e34,"ultimate")
+from SLHCUpgradeSimulations.Configuration.aging import ageEcal
+process = ageEcal(process,4500,7.0e34)
+
 
 # Automatic addition of the customisation function from HLTrigger.Configuration.customizeHLTforMC                                              
 from HLTrigger.Configuration.customizeHLTforMC import customizeHLTforMC
@@ -125,3 +118,5 @@ process = customizeHLTforMC(process)
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 process = customiseEarlyDelete(process)
 # End adding early deletion     
+process.HBDarkeningEP.drdA = cms.double(5.00) #### Brown model                                                                                 
+process.HBDarkeningEP.drdB = cms.double(0.675) #### Brown model
